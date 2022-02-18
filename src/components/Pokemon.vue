@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-image">
         <figure>
-          <img :src="pokemon.front" alt="Placeholder image" />
+          <img :src="currentImg" alt="Placeholder image" />
         </figure>
       </div>
       <div class="card-content">
@@ -15,7 +15,11 @@
           </div>
         </div>
 
-        <div class="content"></div>
+        <div class="content">
+          <button class="button is-medium is-fullwidth" @click="mudarSprite">
+            Mudar sprite
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -27,6 +31,8 @@ import axios from "axios";
 export default {
   data() {
     return {
+      isFront: true,
+      currentImg: "",
       pokemon: {
         type: "",
         front: "",
@@ -45,6 +51,7 @@ export default {
       this.pokemon.type = res.data.types[0].type.name;
       this.pokemon.front = res.data.sprites.front_default;
       this.pokemon.back = res.data.sprites.back_default;
+      this.currentImg = this.pokemon.front;
       console.log(this.pokemon);
     });
   },
@@ -52,6 +59,17 @@ export default {
     upper: function (value) {
       var newName = value[0].toUpperCase() + value.slice(1);
       return newName;
+    },
+  },
+  methods: {
+    mudarSprite: function () {
+      if (this.isFront) {
+        this.isFront = false;
+        this.currentImg = this.pokemon.back;
+      } else {
+        this.isFront = true;
+        this.currentImg = this.pokemon.front;
+      }
     },
   },
 };
