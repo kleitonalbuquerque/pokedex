@@ -1,7 +1,23 @@
 <template>
-  <div class="container">
-    <h1>{{ num }} - {{ name | upper }}</h1>
-    <small>{{ url }}</small>
+  <div id="pokemon" class="container">
+    <div class="card">
+      <div class="card-image">
+        <figure>
+          <img :src="pokemon.front" alt="Placeholder image" />
+        </figure>
+      </div>
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left"></div>
+          <div class="media-content">
+            <p class="title is-4">{{ num }} - {{ name | upper }}</p>
+            <p class="subtitle is-6">{{ pokemon.type }}</p>
+          </div>
+        </div>
+
+        <div class="content"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,7 +27,11 @@ import axios from "axios";
 export default {
   data() {
     return {
-      pokemon: {},
+      pokemon: {
+        type: "",
+        front: "",
+        back: "",
+      },
     };
   },
   props: {
@@ -37,4 +57,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#pokemon {
+  margin-top: 2%;
+}
+</style>
