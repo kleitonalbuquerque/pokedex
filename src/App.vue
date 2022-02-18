@@ -1,8 +1,23 @@
 <template>
   <div id="app">
     <div class="column is-half is-offset-one-quarter">
-      <h1 class="title">Pokemons</h1>
-      <div v-for="(poke, index) in pokemons" :key="index">
+      <h1 class="title">Pokedex</h1>
+      <input
+        type="text"
+        name=""
+        id=""
+        class="input is-rounded"
+        placeholder="Buscar pokemon pelo nome"
+        v-model="busca"
+      />
+      <button
+        class="button is-fullwidth is-success"
+        id="buscaBtn"
+        @click="buscar"
+      >
+        Buscar
+      </button>
+      <div v-for="(poke, index) in filteredPokemons" :key="poke.url">
         <Pokemon :num="index + 1" :name="poke.name" :url="poke.url" />
       </div>
     </div>
@@ -21,6 +36,8 @@ export default {
   data() {
     return {
       pokemons: [],
+      busca: "",
+      filteredPokemons: [],
     };
   },
   created: function () {
@@ -29,12 +46,34 @@ export default {
       .then((res) => {
         // let result = res.data.results;
         // result.push(this.pokemons);
+        // console.log(res.data.results);
         this.pokemons = res.data.results;
-        console.log(res.data.results);
+        this.filteredPokemons = res.data.results;
       })
       .catch((error) => {
         console.log(error);
       });
+  },
+  methods: {
+    buscar: function () {
+      this.filteredPokemons = this.pokemons;
+      if (this.busca == "" || this.busca == " ") {
+        this.filteredPokemons = this.pokemons;
+      } else {
+        this.filteredPokemons = this.filteredPokemons.filter(
+          (pokemon) => pokemon.name == this.busca
+        );
+      }
+    },
+  },
+  computed: {
+    // resultadoBusca: function () {
+    //   if (this.busca == "" || this.busca == " ") {
+    //     return this.pokemons;
+    //   } else {
+    //     return this.pokemons.filter((pokemon) => pokemon.name == this.busca);
+    //   }
+    // },
   },
 };
 </script>
@@ -47,5 +86,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+#buscaBtn {
+  margin-top: 2%;
 }
 </style>
