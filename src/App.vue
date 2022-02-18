@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="column is-half is-offset-one-quarter">
-      <h1 class="title">Pokedex</h1>
+      <img src="./assets/logo-pokemon.png" alt="Pokemon Logo" width="50%" />
       <input
         type="text"
         name=""
